@@ -475,25 +475,11 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
           </div>
           <div class="form-group">
             <label class="form-label">Faturamento mensal</label>
-            <select class="form-input" name="faturamento" required>
-              <option value="" disabled selected>Selecione uma faixa</option>
-              <option>Até R$ 50 mil</option>
-              <option>R$ 50 mil – R$ 150 mil</option>
-              <option>R$ 150 mil – R$ 500 mil</option>
-              <option>R$ 500 mil – R$ 1 milhão</option>
-              <option>Acima de R$ 1 milhão</option>
-            </select>
+            <input class="form-input" type="text" name="faturamento" placeholder="Ex: R$ 80 mil" required/>
           </div>
           <div class="form-group">
             <label class="form-label">Quantidade de funcionários (CLTs e freelas/PJ fixos)</label>
-            <select class="form-input" name="funcionarios" required>
-              <option value="" disabled selected>Selecione</option>
-              <option>Só eu (MEI / solo)</option>
-              <option>2 – 5</option>
-              <option>6 – 15</option>
-              <option>16 – 50</option>
-              <option>Mais de 50</option>
-            </select>
+            <input class="form-input" type="text" name="funcionarios" placeholder="Ex: 3 CLTs e 2 freelas" required/>
           </div>
           <div class="form-group">
             <label class="form-label">@ do Instagram da empresa</label>
@@ -565,4 +551,21 @@ async function submitForm(e){
     el.style.transition='opacity .6s ease, transform .6s ease';
   });
   var ro=new IntersectionObserver(function(entries){
-  
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.style.opacity='1';
+        e.target.style.transform='none';
+        ro.unobserve(e.target);
+      }
+    });
+  },{threshold:0,rootMargin:'0px'});
+  els.forEach(function(el){ro.observe(el);});
+  // Fallback de segurança: 300ms garante que tudo aparece mesmo se observer falhar
+  setTimeout(function(){
+    els.forEach(function(el){el.style.opacity='1';el.style.transform='none';});
+  },300);
+})();
+
+// Navbar
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('
