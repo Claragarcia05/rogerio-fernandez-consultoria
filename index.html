@@ -470,12 +470,8 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
       <div class="form-wrap">
         <form onsubmit="submitForm(event)">
           <div class="form-group">
-            <label class="form-label">Nome completo</label>
-            <input class="form-input" type="text" name="nome" placeholder="Seu nome completo" required/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">WhatsApp</label>
-            <input class="form-input" type="tel" name="whatsapp" placeholder="(11) 99999-9999" required/>
+            <label class="form-label">Nome da empresa</label>
+            <input class="form-input" type="text" name="empresa" placeholder="Nome da sua empresa" required/>
           </div>
           <div class="form-group">
             <label class="form-label">Faturamento mensal</label>
@@ -489,7 +485,7 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Quantidade de funcionários</label>
+            <label class="form-label">Quantidade de funcionários (CLTs e freelas/PJ fixos)</label>
             <select class="form-input" name="funcionarios" required>
               <option value="" disabled selected>Selecione</option>
               <option>Só eu (MEI / solo)</option>
@@ -498,6 +494,10 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
               <option>16 – 50</option>
               <option>Mais de 50</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">@ do Instagram da empresa</label>
+            <input class="form-input" type="text" name="instagram" placeholder="@suaempresa" required/>
           </div>
           <button type="submit" class="btn" style="margin-top:8px">Quero Minha Consultoria →</button>
           <p class="form-note">⚡ 1 consultoria por semana — vaga confirmada por ordem de inscrição</p>
@@ -531,10 +531,10 @@ async function submitForm(e){
   btn.textContent = 'Enviando...';
 
   const data = {
-    nome:         form.nome.value,
-    whatsapp:     form.whatsapp.value,
+    empresa:      form.empresa.value,
     faturamento:  form.faturamento.value,
-    funcionarios: form.funcionarios.value
+    funcionarios: form.funcionarios.value,
+    instagram:    form.instagram.value
   };
 
   try {
@@ -565,5 +565,4 @@ async function submitForm(e){
     el.style.transition='opacity .6s ease, transform .6s ease';
   });
   var ro=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersec
+  
