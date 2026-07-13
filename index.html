@@ -547,12 +547,37 @@ async function submitForm(e){
 // Elementos ficam visíveis por padrão; JS adiciona animação como bônus
 (function(){
   var els = document.querySelectorAll('.rv');
-  // Só aplica opacity:0 se o browser suportar IntersectionObserver
   if(!('IntersectionObserver' in window)){
     els.forEach(function(el){el.classList.add('in');});
     return;
   }
-  // Aplica estado inicial oculto via JS (não via CSS) — fallback seguro
   els.forEach(function(el){
     el.style.opacity='0';
-    el.style.tr
+    el.style.transform='translateY(20px)';
+    el.style.transition='opacity .6s ease, transform .6s ease';
+  });
+  var ro=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.style.opacity='1';
+        e.target.style.transform='none';
+        ro.unobserve(e.target);
+      }
+    });
+  },{threshold:0,rootMargin:'0px'});
+  els.forEach(function(el){ro.observe(el);});
+  setTimeout(function(){
+    els.forEach(function(el){el.style.opacity='1';el.style.transform='none';});
+  },300);
+})();
+
+// Navbar
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60),{passive:true});
+
+// FAB
+const fab=document.getElementById('fab');
+window.addEventListener('scroll',()=>fab.classList.toggle('show',scrollY>400),{passive:true});
+</script>
+</body>
+</html>
