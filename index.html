@@ -475,6 +475,10 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
             <input class="form-input" type="text" name="empresa" placeholder="Nome da sua empresa" required/>
           </div>
           <div class="form-group">
+            <label class="form-label">WhatsApp</label>
+            <input class="form-input" type="tel" name="whatsapp" placeholder="(11) 99999-9999" required/>
+          </div>
+          <div class="form-group">
             <label class="form-label">Faturamento mensal</label>
             <input class="form-input" type="text" name="faturamento" placeholder="Ex: R$ 80 mil" required/>
           </div>
@@ -519,6 +523,7 @@ async function submitForm(e){
   btn.textContent = 'Enviando...';
 
   const empresa      = form.empresa.value;
+  const whatsapp     = form.whatsapp.value;
   const faturamento  = form.faturamento.value;
   const funcionarios = form.funcionarios.value;
   const instagram    = form.instagram.value;
@@ -526,6 +531,7 @@ async function submitForm(e){
   const texto =
     `🔔 *Novo Lead — Consultoria Rogério*\n\n` +
     `🏢 Empresa: ${empresa}\n` +
+    `📱 WhatsApp: ${whatsapp}\n` +
     `💰 Faturamento: ${faturamento}\n` +
     `👥 Funcionários: ${funcionarios}\n` +
     `📸 Instagram: ${instagram}`;
