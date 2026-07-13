@@ -38,9 +38,8 @@ a{text-decoration:none;color:inherit}
 @keyframes glow{0%,100%{box-shadow:0 0 20px rgba(201,144,42,.3)}50%{box-shadow:0 0 40px rgba(201,144,42,.55)}}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 
-/* REVEAL */
-.rv{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
-.rv.in{opacity:1!important;transform:none!important}
+/* REVEAL — sem opacity:0 no CSS; JS aplica via inline style */
+.rv{transition:opacity .6s ease,transform .6s ease}
 
 /* UTILITY */
 .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
@@ -566,4 +565,5 @@ async function submitForm(e){
     el.style.transition='opacity .6s ease, transform .6s ease';
   });
   var ro=new IntersectionObserver(function(entries){
-    entries.for
+    entries.forEach(function(e){
+      if(e.isIntersec
