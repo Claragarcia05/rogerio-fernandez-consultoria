@@ -488,10 +488,10 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
           <button type="submit" class="btn" style="margin-top:8px">Quero Minha Consultoria →</button>
           <p class="form-note">⚡ 1 consultoria por semana — vaga confirmada por ordem de inscrição</p>
         </form>
-        <div class="form-success" id="formSuccess">
-          <div style="font-size:2.5rem;margin-bottom:14px">✅</div>
-          <h3 style="font-size:1.3rem;font-weight:700;margin-bottom:8px">Recebemos sua inscrição!</h3>
-          <p style="color:var(--w70)">Em breve entraremos em contato pelo WhatsApp.</p>
+        <div id="formSuccess" style="display:none;margin-top:20px;padding:20px 24px;background:rgba(201,144,42,.1);border:1px solid rgba(201,144,42,.35);border-radius:14px;text-align:center">
+          <div style="font-size:1.8rem;margin-bottom:8px">✅</div>
+          <p style="font-weight:700;font-size:1rem;margin-bottom:4px">Resposta recebida!</p>
+          <p style="color:rgba(255,255,255,.65);font-size:.88rem">Em breve o time do Rogério vai entrar em contato.</p>
         </div>
       </div>
     </div>
@@ -507,31 +507,38 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
 </div>
 
 <script>
-const WEBHOOK_URL = 'https://hook.us2.make.com/fmiek4ec6qupsp84h13mhyv2ivrgkpkg';
+const TG_TOKEN = '8878461989:AAHng1GbHujwWkv4HWPcRDNUQZmWZuR1588';
+const TG_CHAT  = -5308943400;
 
 async function submitForm(e){
   e.preventDefault();
   const form = e.target;
-  const btn = form.querySelector('button[type="submit"]');
-  btn.disabled = true;
+  const btn  = form.querySelector('button[type="submit"]');
+  btn.disabled    = true;
   btn.textContent = 'Enviando...';
 
-  const data = {
-    empresa:      form.empresa.value,
-    faturamento:  form.faturamento.value,
-    funcionarios: form.funcionarios.value,
-    instagram:    form.instagram.value
-  };
+  const empresa      = form.empresa.value;
+  const faturamento  = form.faturamento.value;
+  const funcionarios = form.funcionarios.value;
+  const instagram    = form.instagram.value;
+
+  const texto =
+    `🔔 *Novo Lead — Consultoria Rogério*\n\n` +
+    `🏢 Empresa: ${empresa}\n` +
+    `💰 Faturamento: ${faturamento}\n` +
+    `👥 Funcionários: ${funcionarios}\n` +
+    `📸 Instagram: ${instagram}`;
 
   try {
-    await fetch(WEBHOOK_URL, {
+    await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data)
+      body: JSON.stringify({chat_id: TG_CHAT, text: texto, parse_mode: 'Markdown'})
     });
   } catch(_){}
 
-  form.style.display = 'none';
+  // Mostra mensagem de sucesso abaixo do formulário
+  btn.textContent = 'Enviado ✓';
   document.getElementById('formSuccess').style.display = 'block';
 }
 
@@ -551,21 +558,4 @@ async function submitForm(e){
     el.style.transition='opacity .6s ease, transform .6s ease';
   });
   var ro=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        e.target.style.opacity='1';
-        e.target.style.transform='none';
-        ro.unobserve(e.target);
-      }
-    });
-  },{threshold:0,rootMargin:'0px'});
-  els.forEach(function(el){ro.observe(el);});
-  // Fallback de segurança: 300ms garante que tudo aparece mesmo se observer falhar
-  setTimeout(function(){
-    els.forEach(function(el){el.style.opacity='1';el.style.transform='none';});
-  },300);
-})();
-
-// Navbar
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('
+    entries.forEach(functio
