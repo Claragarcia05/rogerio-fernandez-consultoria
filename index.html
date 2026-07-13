@@ -522,10 +522,32 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
 </div>
 
 <script>
-function submitForm(e){
+const WEBHOOK_URL = 'https://hook.us2.make.com/fmiek4ec6qupsp84h13mhyv2ivrgkpkg';
+
+async function submitForm(e){
   e.preventDefault();
-  e.target.style.display='none';
-  document.getElementById('formSuccess').style.display='block';
+  const form = e.target;
+  const btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const data = {
+    nome:         form.nome.value,
+    whatsapp:     form.whatsapp.value,
+    faturamento:  form.faturamento.value,
+    funcionarios: form.funcionarios.value
+  };
+
+  try {
+    await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+  } catch(_){}
+
+  form.style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
 }
 
 // Scroll reveal
@@ -544,7 +566,4 @@ window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60),{p
 // FAB
 const fab=document.getElementById('fab');
 window.addEventListener('scroll',()=>fab.classList.toggle('show',scrollY>400),{passive:true});
-</script>
-</body>
-</html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+</script
