@@ -558,4 +558,28 @@ async function submitForm(e){
     el.style.transition='opacity .6s ease, transform .6s ease';
   });
   var ro=new IntersectionObserver(function(entries){
-    entries.forEach(functio
+        entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.style.opacity='1';
+        e.target.style.transform='none';
+        ro.unobserve(e.target);
+      }
+    });
+  },{threshold:0,rootMargin:'0px'});
+  els.forEach(function(el){ro.observe(el);});
+  // Fallback de segurança: 300ms garante que tudo aparece mesmo se observer falhar
+  setTimeout(function(){
+    els.forEach(function(el){el.style.opacity='1';el.style.transform='none';});
+  },300);
+})();
+
+// Navbar
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60),{passive:true});
+
+// FAB
+const fab=document.getElementById('fab');
+window.addEventListener('scroll',()=>fab.classList.toggle('show',scrollY>400),{passive:true});
+</script>
+</body>
+</html>
