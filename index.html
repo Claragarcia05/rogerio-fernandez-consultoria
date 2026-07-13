@@ -378,6 +378,7 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
 <section class="sec sec-alt">
   <div class="wrap">
     <h2 class="sec-h rv">Como a consultoria <span class="gt">funciona:</span></h2>
+    <p class="rv" style="text-align:center;font-size:1rem;color:rgba(255,255,255,.55);margin-top:-12px;margin-bottom:28px;font-style:italic">Em uma única chamada de vídeo:</p>
     <div class="steps">
       <div class="step rv"><div class="step-n">01</div><div><div class="step-title">Extração</div><p class="step-desc">Rogério extrai de você as informações essenciais do negócio: faturamento, margem real, como está a sua equipe e quais são os maiores gargalos hoje.</p></div></div>
       <div class="step rv"><div class="step-n">02</div><div><div class="step-title">Diagnóstico Cirúrgico</div><p class="step-desc">Juntos, analisam o que está funcionando, o que não está — e principalmente o que está invisível porque você está dentro demais da sua própria operação.</p></div></div>
@@ -554,32 +555,4 @@ async function submitForm(e){
   // Aplica estado inicial oculto via JS (não via CSS) — fallback seguro
   els.forEach(function(el){
     el.style.opacity='0';
-    el.style.transform='translateY(20px)';
-    el.style.transition='opacity .6s ease, transform .6s ease';
-  });
-  var ro=new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-      if(e.isIntersecting){
-        e.target.style.opacity='1';
-        e.target.style.transform='none';
-        ro.unobserve(e.target);
-      }
-    });
-  },{threshold:0,rootMargin:'0px'});
-  els.forEach(function(el){ro.observe(el);});
-  // Fallback de segurança: 300ms garante que tudo aparece mesmo se observer falhar
-  setTimeout(function(){
-    els.forEach(function(el){el.style.opacity='1';el.style.transform='none';});
-  },300);
-})();
-
-// Navbar
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60),{passive:true});
-
-// FAB
-const fab=document.getElementById('fab');
-window.addEventListener('scroll',()=>fab.classList.toggle('show',scrollY>400),{passive:true});
-</script>
-</body>
-</html>
+    el.style.tr
