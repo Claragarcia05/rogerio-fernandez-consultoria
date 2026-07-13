@@ -95,17 +95,17 @@ a{text-decoration:none;color:inherit}
   text-align:center;
   background:radial-gradient(ellipse 90% 60% at 50% -10%,rgba(50,35,10,.8) 0%,transparent 65%);
 }
-.hero .tag{margin-bottom:24px;animation:fadeUp .5s .1s both}
+.hero .tag{margin-bottom:24px;animation:fadeUp .5s ease both}
 .hero-h{
   font-size:clamp(2.4rem,5.5vw,3.6rem);
   font-weight:700;line-height:1.15;
   margin-bottom:22px;
-  animation:fadeUp .6s .2s both;
+  animation:fadeUp .6s .15s ease both;
 }
 .hero-sub{
   font-size:1rem;color:var(--w70);line-height:1.85;
   max-width:540px;margin:0 auto;
-  animation:fadeUp .6s .35s both;
+  animation:fadeUp .6s .25s ease both;
 }
 
 /* ─── VSL ─── */
@@ -550,20 +550,20 @@ async function submitForm(e){
   document.getElementById('formSuccess').style.display = 'block';
 }
 
-// Scroll reveal
-const ro=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}});
-},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
-document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
-
-// Fallback
-setTimeout(()=>document.querySelectorAll('.rv:not(.in)').forEach(el=>el.classList.add('in')),1500);
-
-// Navbar
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60),{passive:true});
-
-// FAB
-const fab=document.getElementById('fab');
-window.addEventListener('scroll',()=>fab.classList.toggle('show',scrollY>400),{passive:true});
-</script
+// Scroll reveal — progressive enhancement
+// Elementos ficam visíveis por padrão; JS adiciona animação como bônus
+(function(){
+  var els = document.querySelectorAll('.rv');
+  // Só aplica opacity:0 se o browser suportar IntersectionObserver
+  if(!('IntersectionObserver' in window)){
+    els.forEach(function(el){el.classList.add('in');});
+    return;
+  }
+  // Aplica estado inicial oculto via JS (não via CSS) — fallback seguro
+  els.forEach(function(el){
+    el.style.opacity='0';
+    el.style.transform='translateY(20px)';
+    el.style.transition='opacity .6s ease, transform .6s ease';
+  });
+  var ro=new IntersectionObserver(function(entries){
+    entries.for
