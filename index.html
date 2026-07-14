@@ -285,9 +285,12 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
 /* ─── MOBILE ─── */
 @media(max-width:640px){
   .wrap{padding:0 20px}
-  .hero{padding:96px 0 44px}
-  .hero-h{font-size:clamp(1.9rem,8vw,2.5rem)}
-  .vsl-sec{padding:28px 0 44px}
+  .nav{padding:12px 16px}
+  .nav-logo{font-size:.78rem}
+  .nav-cta{font-size:.6rem;padding:6px 12px}
+  .hero{padding:80px 0 36px}
+  .hero-h{font-size:clamp(1.4rem,6vw,2rem)}
+  .vsl-sec{padding:20px 0 44px}
   .sec{padding:56px 0}
   .sec-h{font-size:clamp(1.5rem,6.5vw,2rem);margin-bottom:28px}
   .pillars-grid{grid-template-columns:1fr}
@@ -310,27 +313,29 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
   <a href="#formulario" class="nav-cta">Agendar Consultoria</a>
 </nav>
 
-<!-- ════ HERO + VSL ════ -->
-<section class="hero vsl-sec" style="padding-bottom:60px">
+<!-- ════ HERO ════ -->
+<section class="hero">
   <div class="wrap">
-    <div class="tag" style="margin-bottom:18px">Consultoria Estratégica</div>
-
-    <!-- Vídeo em destaque -->
-    <div class="rv" style="margin-bottom:32px;border-radius:16px;overflow:hidden;box-shadow:0 0 60px rgba(201,144,42,.18)">
-      <vturb-smartplayer id="vid-6a56724031d81feb59259d0b" style="display:block;margin:0 auto;width:100%;"><div class="vturb-player-placeholder" style="position:relative;width:100%;padding:56.25% 0 0;z-index:0;background-color:black;"></div></vturb-smartplayer>
-      <script type="text/javascript">var s=document.createElement("script");s.src="https://scripts.converteai.net/3afdebde-df98-46dd-96c0-c8ada4d66f4a/players/6a56724031d81feb59259d0b/v4/player.js",s.async=!0,document.head.appendChild(s);</script>
-    </div>
-
-    <!-- Título abaixo do vídeo -->
-    <h1 class="hero-h rv" style="font-size:clamp(1.5rem,4vw,2.2rem);margin-bottom:12px">
+    <div class="tag">Consultoria Estratégica</div>
+    <h1 class="hero-h" style="font-size:clamp(1.6rem,4.5vw,3rem)">
       Sua empresa não precisa de mais clientes.<br/>
       <span class="gt">Precisa de estrutura.</span>
     </h1>
-    <p class="hero-sub rv" style="margin-bottom:28px">
+    <p class="hero-sub">
       Se você fatura bem mas trabalha demais, não tira férias e o negócio depende de você para tudo — este diagnóstico vai mudar o rumo da sua empresa.
     </p>
+  </div>
+</section>
+
+<!-- ════ VSL ════ -->
+<section class="vsl-sec">
+  <div class="wrap">
+    <div class="rv" style="border-radius:16px;overflow:hidden;box-shadow:0 0 60px rgba(201,144,42,.18);margin-bottom:28px">
+      <vturb-smartplayer id="vid-6a56724031d81feb59259d0b" style="display:block;margin:0 auto;width:100%;"><div class="vturb-player-placeholder" style="position:relative;width:100%;padding:56.25% 0 0;z-index:0;background-color:black;"></div></vturb-smartplayer>
+      <script type="text/javascript">var s=document.createElement("script");s.src="https://scripts.converteai.net/3afdebde-df98-46dd-96c0-c8ada4d66f4a/players/6a56724031d81feb59259d0b/v4/player.js",s.async=!0,document.head.appendChild(s);</script>
+    </div>
     <a href="#formulario" class="btn rv">Agendar Minha Consultoria →</a>
-    <p class="vsl-note" style="margin-top:14px">1 consultoria por semana · Você foi selecionado pessoalmente</p>
+    <p class="vsl-note">1 consultoria por semana · Você foi selecionado pessoalmente</p>
   </div>
 </section>
 
