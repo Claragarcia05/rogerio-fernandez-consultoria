@@ -522,64 +522,15 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
 </div><!-- /lp-content -->
 
 <script>
-// Revela LP quando vídeo termina
+// Revela LP em 3:34 (214s) — sincronizado com o vídeo
 (function(){
   var lp=document.getElementById('lp-content');
-  var revealed=false;
-  function reveal(){
-    if(revealed)return; revealed=true;
+  setTimeout(function(){
     lp.style.display='block';
     lp.style.opacity='0';
     lp.style.transition='opacity 1.4s ease';
     requestAnimationFrame(function(){requestAnimationFrame(function(){lp.style.opacity='1';});});
-    window.scrollTo({top:document.getElementById('lp-content').offsetTop,behavior:'smooth'});
-  }
-
-  // 1. Eventos do VTurb/Converteai disparados no window e document
-  ['smartplayer:ended','vturb:ended','vturb:videoended','converteai:ended',
-   'smartplayer:95','smartplayer:90','smartplayer:85'].forEach(function(e){
-    window.addEventListener(e,reveal);
-    document.addEventListener(e,reveal);
-  });
-
-  // 2. Tenta achar o <video> direto ou em shadow DOM
-  function findVid(root){
-    if(!root)return null;
-    var v=root.querySelector('video');
-    if(v)return v;
-    var els=root.querySelectorAll('*');
-    for(var i=0;i<els.length;i++){
-      if(els[i].shadowRoot){var sv=els[i].shadowRoot.querySelector('video');if(sv)return sv;}
-    }
-    return null;
-  }
-  function watch(){
-    var vid=findVid(document);
-    if(!vid){setTimeout(watch,800);return;}
-    vid.addEventListener('ended',reveal);
-    vid.addEventListener('timeupdate',function(){
-      if(vid.duration&&(vid.currentTime/vid.duration)>=0.88)reveal();
-    });
-  }
-  watch();
-
-  // 3. Também observa iframes carregados pelo VTurb
-  function watchFrames(){
-    var frames=document.querySelectorAll('iframe');
-    frames.forEach(function(f){
-      try{
-        var vid=f.contentDocument&&f.contentDocument.querySelector('video');
-        if(vid){
-          vid.addEventListener('ended',reveal);
-          vid.addEventListener('timeupdate',function(){
-            if(vid.duration&&(vid.currentTime/vid.duration)>=0.88)reveal();
-          });
-        }
-      }catch(e){}
-    });
-    setTimeout(watchFrames,2000);
-  }
-  watchFrames();
+  }, 214000);
 })();
 
 const TG_TOKEN = '8878461989:AAHng1GbHujwWkv4HWPcRDNUQZmWZuR1588';
