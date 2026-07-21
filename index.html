@@ -318,8 +318,8 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
   <div class="wrap">
     <div class="tag">Consultoria Estratégica</div>
     <h1 class="hero-h" style="font-size:clamp(1.5rem,4vw,2.6rem)">
-      Enquanto você não consegue dormir, tem empresário de eventos<br/>
-      <span class="gt">faturando o triplo — e saindo antes das 18h.</span>
+      Enquanto alguns empresários de eventos não conseguem dormir,<br/>
+      <span class="gt">outros faturam milhões e ainda têm qualidade de vida.</span>
     </h1>
     <p class="hero-sub" style="font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.7;max-width:460px">
       Se você fatura bem mas trabalha demais, não tira férias e o negócio depende de você para tudo — este diagnóstico vai mudar o rumo da sua empresa.
@@ -536,53 +536,48 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
     requestAnimationFrame(function(){requestAnimationFrame(function(){lp.style.opacity='1';});});
   }
 
-  // ── 1. Shadow DOM: acessa <video> dentro do VTurb ──
-  function attachToVideo(vid){
-    vid.addEventListener('ended', reveal);
-    vid.addEventListener('timeupdate', function(){
-      if(vid.currentTime >= TARGET) reveal();
-    });
-  }
-  function findAndAttach(){
-    // tenta DOM direto
-    var vid = document.querySelector('video');
-    if(vid){ attachToVideo(vid); return; }
-    // tenta shadow root do player
-    var player = document.querySelector('vturb-smartplayer');
-    if(player && player.shadowRoot){
-      vid = player.shadowRoot.querySelector('video');
-      if(vid){ attachToVideo(vid); return; }
-    }
-    setTimeout(findAndAttach, 800);
-  }
-  findAndAttach();
-
-  // ── 2. postMessage do iframe VTurb ──
-  window.addEventListener('message', function(ev){
-    if(revealed) return;
-    var d = ev.data;
-    if(!d) return;
-    if(typeof d === 'string'){ try{ d = JSON.parse(d); }catch(e){ return; } }
-    if(typeof d !== 'object') return;
-    var ct = d.currentTime || 0;
-    var dur = d.duration || 0;
-    var pct = d.percent || d.percentage || (dur ? ct/dur*100 : 0);
-    if(d.type==='ended' || d.event==='ended' || pct >= 95 || ct >= TARGET) reveal();
+  // ── 1. postMessage do VTurb ──
+  window.addEventListener('message',function(ev){
+    if(revealed)return;
+    var d=ev.data;
+    if(!d)return;
+    if(typeof d==='string'){try{d=JSON.parse(d);}catch(e){return;}}
+    if(typeof d!=='object')return;
+    var ct=d.currentTime||0, dur=d.duration||0;
+    var pct=d.percent||d.percentage||(dur?ct/dur*100:0);
+    if(d.type==='ended'||d.event==='ended'||pct>=95||ct>=TARGET)reveal();
   });
 
-  // ── 3. Contador de segundos — ativado no 1º clique em qualquer lugar ──
-  var acc = 0, started = false;
+  // ── 2. Shadow DOM ──
+  function tryVideo(){
+    var vid=document.querySelector('video');
+    if(!vid){var p=document.querySelector('vturb-smartplayer');if(p&&p.shadowRoot)vid=p.shadowRoot.querySelector('video');}
+    if(vid){
+      vid.addEventListener('ended',reveal);
+      vid.addEventListener('timeupdate',function(){if(vid.currentTime>=TARGET)reveal();});
+    } else { setTimeout(tryVideo,800); }
+  }
+  tryVideo();
+
+  // ── 3. Contador ativado quando clica DENTRO do player ──
+  var acc=0, started=false;
   function startCount(){
-    if(started) return; started = true;
+    if(started)return; started=true;
     (function tick(){
-      if(revealed) return;
-      if(!document.hidden){ acc++; if(acc >= TARGET){ reveal(); return; } }
-      setTimeout(tick, 1000);
+      if(revealed)return;
+      if(!document.hidden){acc++;if(acc>=TARGET){reveal();return;}}
+      setTimeout(tick,1000);
     })();
   }
-  // primeiro clique ou toque inicia (normalmente = dar play no vídeo)
-  document.addEventListener('click',  startCount, {once: true});
-  document.addEventListener('touchend', startCount, {once: true});
+  // captura clique nos bounds do player (capture:true pega mesmo com stopPropagation)
+  document.addEventListener('pointerdown',function(e){
+    var p=document.querySelector('vturb-smartplayer');
+    if(!p)return;
+    var r=p.getBoundingClientRect();
+    if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom){
+      startCount();
+    }
+  },{capture:true});
 })();
 
 const TG_TOKEN = '8878461989:AAHng1GbHujwWkv4HWPcRDNUQZmWZuR1588';
