@@ -234,15 +234,15 @@ a{text-decoration:none;color:inherit}
   text-align:left;transition:border-color .3s;
 }
 .t-card:hover{border-color:var(--gold-border)}
-.pq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+.pq-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px}
 @media(max-width:620px){.pq-grid{grid-template-columns:1fr}}
-.pq-cat{background:var(--card);border:1.5px solid var(--border);border-radius:var(--rr);padding:24px 20px;transition:border-color .25s}
+.pq-cat{background:var(--card);border:1.5px solid var(--border);border-radius:var(--rr);padding:28px 24px;transition:border-color .25s;text-align:left}
 .pq-cat:hover{border-color:var(--gold-border)}
-.pq-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#C9902A;margin-bottom:14px}
-.pq-item{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.pq-label{display:inline-flex;align-items:center;gap:6px;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#C9902A;background:rgba(201,144,42,.1);border:1px solid rgba(201,144,42,.25);border-radius:20px;padding:4px 12px;margin-bottom:18px}
+.pq-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);text-align:left}
 .pq-item:last-child{border-bottom:none;padding-bottom:0}
-.pq-dot{color:#C9902A;font-size:.7rem;margin-top:3px;flex-shrink:0}
-.pq-text{font-size:.86rem;color:rgba(255,255,255,.78);line-height:1.5}
+.pq-dot{color:#C9902A;font-size:.65rem;margin-top:4px;flex-shrink:0;font-weight:700}
+.pq-text{font-size:.87rem;color:rgba(255,255,255,.82);line-height:1.55}
 .t-stars{color:var(--gold);font-size:.8rem;letter-spacing:2px;margin-bottom:14px}
 .t-text{font-size:.95rem;color:var(--w70);line-height:1.85;font-style:italic;margin-bottom:20px}
 .t-author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--border)}
@@ -391,6 +391,7 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
 <section class="sec sec-alt">
   <div class="wrap">
     <h2 class="sec-h rv">Esta consultoria é <span class="gt">para você se:</span></h2>
+    <p class="rv" style="text-align:center;color:rgba(255,255,255,.45);font-size:.88rem;margin-top:-8px">Reconheceu alguma situação abaixo? Essa consultoria foi feita para você.</p>
     <div class="pq-grid">
 
       <div class="pq-cat rv">
