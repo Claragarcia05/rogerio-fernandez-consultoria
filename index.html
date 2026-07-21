@@ -234,6 +234,15 @@ a{text-decoration:none;color:inherit}
   text-align:left;transition:border-color .3s;
 }
 .t-card:hover{border-color:var(--gold-border)}
+.pq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+@media(max-width:620px){.pq-grid{grid-template-columns:1fr}}
+.pq-cat{background:var(--card);border:1.5px solid var(--border);border-radius:var(--rr);padding:24px 20px;transition:border-color .25s}
+.pq-cat:hover{border-color:var(--gold-border)}
+.pq-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#C9902A;margin-bottom:14px}
+.pq-item{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.pq-item:last-child{border-bottom:none;padding-bottom:0}
+.pq-dot{color:#C9902A;font-size:.7rem;margin-top:3px;flex-shrink:0}
+.pq-text{font-size:.86rem;color:rgba(255,255,255,.78);line-height:1.5}
 .t-stars{color:var(--gold);font-size:.8rem;letter-spacing:2px;margin-bottom:14px}
 .t-text{font-size:.95rem;color:var(--w70);line-height:1.85;font-style:italic;margin-bottom:20px}
 .t-author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--border)}
@@ -321,8 +330,8 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
       Enquanto alguns empresários de eventos não conseguem dormir,<br/>
       <span class="gt">outros faturam milhões e ainda têm qualidade de vida.</span>
     </h1>
-    <p class="hero-sub" style="font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.7;max-width:460px">
-      Um diagnóstico direto para empresários de eventos que faturam bem — mas vivem trabalhando demais.
+    <p class="hero-sub" style="font-size:.82rem;color:rgba(255,255,255,.75);line-height:1.7;max-width:480px">
+      Para empresários que desejam sair do operacional e escalar seus negócios de uma vez por todas.<br/><strong style="color:#C9902A">Uma oportunidade ÚNICA.</strong>
     </p>
   </div>
 </section>
@@ -366,20 +375,49 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
   </div>
 </div>
 
-<!-- ════ PARA QUEM É ════ -->
+<!-- ════ PILARES DA CONSULTORIA ════ -->
 <section class="sec">
   <div class="wrap">
-    <h2 class="sec-h rv">Para quem é essa <span class="gt">consultoria?</span></h2>
-    <div class="check-list">
-      <div class="check-item rv"><div class="check-dot">✓</div><p class="check-text">Os clientes que te contratavam antes <strong>não contratam mais.</strong></p></div>
-      <div class="check-item rv"><div class="check-dot">✓</div><p class="check-text">Sua empresa é grande — e está <strong>caindo sem você entender por quê.</strong></p></div>
-      <div class="check-item rv"><div class="check-dot">✓</div><p class="check-text">O mercado mudou, a <strong>concorrência aumentou</strong> e você não sabe como reagir.</p></div>
-      <div class="check-item rv"><div class="check-dot">✓</div><p class="check-text">A empresa <strong>não funciona se você não está presente</strong> o tempo inteiro.</p></div>
-      <div class="check-item rv"><div class="check-dot">✓</div><p class="check-text">Você trabalha muito e sente que é <strong>refém dos seus colaboradores.</strong></p></div>
-      <div class="check-item rv"><div class="check-dot">✓</div><p class="check-text">Trabalha muito — e <strong>não sobra dinheiro.</strong></p></div>
-      <div class="check-item rv"><div class="check-dot">✓</div><p class="check-text"><strong>Não sabe para onde está indo.</strong></p></div>
-      <div class="check-item rv"><div class="check-dot">✓</div><p class="check-text">O cliente te aperta e você <strong>tem que fechar no preço dele.</strong></p></div>
-      <div class="check-item rv"><div class="check-dot">✓</div><p class="check-text">Você sempre investe — e o <strong>dinheiro nunca volta da mesma forma.</strong></p></div>
+    <h2 class="sec-h rv">Os <span class="gt">pilares da consultoria:</span></h2>
+    <div class="pillars-grid">
+      <div class="pillar rv"><div class="pillar-n">01</div><div class="pillar-title">Conhecer sua empresa</div><p class="pillar-desc">Antes de qualquer recomendação, entendo a fundo como o seu negócio funciona — faturamento, equipe, processos e onde o dinheiro está vazando.</p></div>
+      <div class="pillar rv"><div class="pillar-n">02</div><div class="pillar-title">Entender o que está impedindo você de crescer</div><p class="pillar-desc">Identifico os gargalos reais que travam o crescimento — muitas vezes invisíveis para quem está dentro da operação.</p></div>
+      <div class="pillar rv"><div class="pillar-n">03</div><div class="pillar-title">Direcionamento com base na prática</div><p class="pillar-desc">Não é teoria. É o mesmo conhecimento que aplico nas minhas próprias empresas — adaptado para a sua realidade.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PARA QUEM É ════ -->
+<section class="sec sec-alt">
+  <div class="wrap">
+    <h2 class="sec-h rv">Esta consultoria é <span class="gt">para você se:</span></h2>
+    <div class="pq-grid">
+
+      <div class="pq-cat rv">
+        <div class="pq-label">Clientes</div>
+        <div class="pq-item"><span class="pq-dot">→</span><span class="pq-text">Os clientes de antes não contratam mais</span></div>
+        <div class="pq-item"><span class="pq-dot">→</span><span class="pq-text">Sua empresa está em queda e você não sabe por quê</span></div>
+      </div>
+
+      <div class="pq-cat rv">
+        <div class="pq-label">Mercado</div>
+        <div class="pq-item"><span class="pq-dot">→</span><span class="pq-text">O mercado mudou. A concorrência cresceu. E você não reagiu ainda</span></div>
+      </div>
+
+      <div class="pq-cat rv">
+        <div class="pq-label">Equipe</div>
+        <div class="pq-item"><span class="pq-dot">→</span><span class="pq-text">A empresa para quando você sai</span></div>
+        <div class="pq-item"><span class="pq-dot">→</span><span class="pq-text">Você trabalha muito e é refém da sua equipe</span></div>
+      </div>
+
+      <div class="pq-cat rv">
+        <div class="pq-label">Financeiro</div>
+        <div class="pq-item"><span class="pq-dot">→</span><span class="pq-text">Trabalha muito. Não sobra dinheiro</span></div>
+        <div class="pq-item"><span class="pq-dot">→</span><span class="pq-text">Não sabe para onde o negócio está indo</span></div>
+        <div class="pq-item"><span class="pq-dot">→</span><span class="pq-text">Fecha no preço do cliente porque não tem escolha</span></div>
+        <div class="pq-item"><span class="pq-dot">→</span><span class="pq-text">Investe sempre. O retorno nunca volta igual</span></div>
+      </div>
+
     </div>
     <div class="sec-cta rv"><a href="#formulario" class="btn">Quero Agendar Minha Consultoria →</a></div>
   </div>
@@ -400,18 +438,6 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
       <p style="font-size:.95rem;color:rgba(255,255,255,.75);line-height:1.7"><strong style="color:#fff">Você sai dessa conversa</strong> com clareza, com decisões tomadas e com um caminho concreto para implementar.</p>
     </div>
     <div class="sec-cta rv"><a href="#formulario" class="btn">Quero Esta Consultoria →</a></div>
-  </div>
-</section>
-
-<!-- ════ PILARES ════ -->
-<section class="sec">
-  <div class="wrap">
-    <h2 class="sec-h rv">Os <span class="gt">pilares da consultoria:</span></h2>
-    <div class="pillars-grid">
-      <div class="pillar rv"><div class="pillar-n">01</div><div class="pillar-title">Conhecer sua empresa</div><p class="pillar-desc">Antes de qualquer recomendação, entendo a fundo como o seu negócio funciona — faturamento, equipe, processos e onde o dinheiro está vazando.</p></div>
-      <div class="pillar rv"><div class="pillar-n">02</div><div class="pillar-title">Entender o que está impedindo você de crescer</div><p class="pillar-desc">Identifico os gargalos reais que travam o crescimento — muitas vezes invisíveis para quem está dentro da operação.</p></div>
-      <div class="pillar rv"><div class="pillar-n">03</div><div class="pillar-title">Direcionamento com base na prática</div><p class="pillar-desc">Não é teoria. É o mesmo conhecimento que aplico nas minhas próprias empresas — adaptado para a sua realidade.</p></div>
-    </div>
   </div>
 </section>
 
