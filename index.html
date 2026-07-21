@@ -522,15 +522,68 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
 </div><!-- /lp-content -->
 
 <script>
-// Revela LP em 3:34 (214s) — sincronizado com o vídeo
+// Revela LP somente quando assistiu 214s reais de vídeo
 (function(){
   var lp=document.getElementById('lp-content');
-  setTimeout(function(){
+  var revealed=false;
+  var TARGET=214; // 3:34
+
+  function reveal(){
+    if(revealed)return; revealed=true;
     lp.style.display='block';
     lp.style.opacity='0';
     lp.style.transition='opacity 1.4s ease';
     requestAnimationFrame(function(){requestAnimationFrame(function(){lp.style.opacity='1';});});
-  }, 214000);
+  }
+
+  // ── Estratégia 1: postMessage do iframe VTurb ──
+  window.addEventListener('message',function(ev){
+    if(revealed)return;
+    var d=ev.data;
+    if(!d)return;
+    if(typeof d==='string'){try{d=JSON.parse(d);}catch(e){return;}}
+    if(typeof d!=='object')return;
+    var pct=d.percent||d.percentage||d.progress||(d.currentTime&&d.duration?(d.currentTime/d.duration*100):0);
+    if(d.type==='ended'||d.event==='ended'||pct>=95)reveal();
+    if(d.type==='timeupdate'||d.event==='timeupdate'){if(pct>=95)reveal();}
+  });
+
+  // ── Estratégia 2: eventos custom do VTurb no window/document ──
+  function onVturb(e){
+    if(revealed)return;
+    var d=e.detail||{};
+    var pct=d.percent||(d.currentTime&&d.duration?d.currentTime/d.duration*100:0);
+    if(pct>=95||e.type.indexOf('ended')>-1||e.type.indexOf('100')>-1)reveal();
+  }
+  ['smartplayer:ended','smartplayer:timeupdate','smartplayer:100','smartplayer:95',
+   'vturb:ended','vturb:timeupdate'].forEach(function(n){
+    window.addEventListener(n,onVturb);
+    document.addEventListener(n,onVturb);
+  });
+
+  // ── Estratégia 3: accumula segundos enquanto vídeo toca ──
+  // Só conta quando: aba visível + vídeo foi clicado para dar play
+  var acc=0, ticking=false, playing=false;
+
+  // detecta play via interação com o player
+  var playerEl=document.querySelector('vturb-smartplayer');
+  if(playerEl){
+    playerEl.addEventListener('click',function(){playing=true;},true);
+  }
+  document.addEventListener('click',function(e){
+    if(e.target.closest&&e.target.closest('vturb-smartplayer'))playing=true;
+  });
+
+  function tick(){
+    if(revealed)return;
+    if(!document.hidden&&playing){
+      acc++;
+      if(acc>=TARGET){reveal();return;}
+    }
+    setTimeout(tick,1000);
+  }
+  document.addEventListener('visibilitychange',function(){if(document.hidden)playing=false;});
+  tick();
 })();
 
 const TG_TOKEN = '8878461989:AAHng1GbHujwWkv4HWPcRDNUQZmWZuR1588';
