@@ -522,11 +522,11 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
 </div><!-- /lp-content -->
 
 <script>
-// Revela LP somente quando assistiu 214s reais de vídeo
+// Revela LP somente após 214s reais de playback
 (function(){
   var lp=document.getElementById('lp-content');
   var revealed=false;
-  var TARGET=214; // 3:34
+  var TARGET=214;
 
   function reveal(){
     if(revealed)return; revealed=true;
@@ -536,54 +536,53 @@ footer{padding:28px 24px;text-align:center;border-top:1px solid var(--border);fo
     requestAnimationFrame(function(){requestAnimationFrame(function(){lp.style.opacity='1';});});
   }
 
-  // ── Estratégia 1: postMessage do iframe VTurb ──
-  window.addEventListener('message',function(ev){
-    if(revealed)return;
-    var d=ev.data;
-    if(!d)return;
-    if(typeof d==='string'){try{d=JSON.parse(d);}catch(e){return;}}
-    if(typeof d!=='object')return;
-    var pct=d.percent||d.percentage||d.progress||(d.currentTime&&d.duration?(d.currentTime/d.duration*100):0);
-    if(d.type==='ended'||d.event==='ended'||pct>=95)reveal();
-    if(d.type==='timeupdate'||d.event==='timeupdate'){if(pct>=95)reveal();}
-  });
-
-  // ── Estratégia 2: eventos custom do VTurb no window/document ──
-  function onVturb(e){
-    if(revealed)return;
-    var d=e.detail||{};
-    var pct=d.percent||(d.currentTime&&d.duration?d.currentTime/d.duration*100:0);
-    if(pct>=95||e.type.indexOf('ended')>-1||e.type.indexOf('100')>-1)reveal();
+  // ── 1. Shadow DOM: acessa <video> dentro do VTurb ──
+  function attachToVideo(vid){
+    vid.addEventListener('ended', reveal);
+    vid.addEventListener('timeupdate', function(){
+      if(vid.currentTime >= TARGET) reveal();
+    });
   }
-  ['smartplayer:ended','smartplayer:timeupdate','smartplayer:100','smartplayer:95',
-   'vturb:ended','vturb:timeupdate'].forEach(function(n){
-    window.addEventListener(n,onVturb);
-    document.addEventListener(n,onVturb);
-  });
-
-  // ── Estratégia 3: accumula segundos enquanto vídeo toca ──
-  // Só conta quando: aba visível + vídeo foi clicado para dar play
-  var acc=0, ticking=false, playing=false;
-
-  // detecta play via interação com o player
-  var playerEl=document.querySelector('vturb-smartplayer');
-  if(playerEl){
-    playerEl.addEventListener('click',function(){playing=true;},true);
-  }
-  document.addEventListener('click',function(e){
-    if(e.target.closest&&e.target.closest('vturb-smartplayer'))playing=true;
-  });
-
-  function tick(){
-    if(revealed)return;
-    if(!document.hidden&&playing){
-      acc++;
-      if(acc>=TARGET){reveal();return;}
+  function findAndAttach(){
+    // tenta DOM direto
+    var vid = document.querySelector('video');
+    if(vid){ attachToVideo(vid); return; }
+    // tenta shadow root do player
+    var player = document.querySelector('vturb-smartplayer');
+    if(player && player.shadowRoot){
+      vid = player.shadowRoot.querySelector('video');
+      if(vid){ attachToVideo(vid); return; }
     }
-    setTimeout(tick,1000);
+    setTimeout(findAndAttach, 800);
   }
-  document.addEventListener('visibilitychange',function(){if(document.hidden)playing=false;});
-  tick();
+  findAndAttach();
+
+  // ── 2. postMessage do iframe VTurb ──
+  window.addEventListener('message', function(ev){
+    if(revealed) return;
+    var d = ev.data;
+    if(!d) return;
+    if(typeof d === 'string'){ try{ d = JSON.parse(d); }catch(e){ return; } }
+    if(typeof d !== 'object') return;
+    var ct = d.currentTime || 0;
+    var dur = d.duration || 0;
+    var pct = d.percent || d.percentage || (dur ? ct/dur*100 : 0);
+    if(d.type==='ended' || d.event==='ended' || pct >= 95 || ct >= TARGET) reveal();
+  });
+
+  // ── 3. Contador de segundos — ativado no 1º clique em qualquer lugar ──
+  var acc = 0, started = false;
+  function startCount(){
+    if(started) return; started = true;
+    (function tick(){
+      if(revealed) return;
+      if(!document.hidden){ acc++; if(acc >= TARGET){ reveal(); return; } }
+      setTimeout(tick, 1000);
+    })();
+  }
+  // primeiro clique ou toque inicia (normalmente = dar play no vídeo)
+  document.addEventListener('click',  startCount, {once: true});
+  document.addEventListener('touchend', startCount, {once: true});
 })();
 
 const TG_TOKEN = '8878461989:AAHng1GbHujwWkv4HWPcRDNUQZmWZuR1588';
